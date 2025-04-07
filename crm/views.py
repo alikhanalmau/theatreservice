@@ -1,9 +1,9 @@
 import csv
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from .forms import EventForm, ExcursionForm, TicketOrderForm, UserRoleForm
+from .forms import EventForm, ExcursionForm, ExcursionSlotForm, TicketOrderForm, UserRoleForm
 from django.contrib.auth.decorators import user_passes_test
-from theatre.models import Event, ExcursionOrder, TicketOrder
+from theatre.models import Event, ExcursionOrder, ExcursionSlot, TicketOrder
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -277,3 +277,19 @@ def export_events_csv(request):
         ])
 
     return response
+
+@user_passes_test(lambda u: u.is_authenticated and u.is_staff, login_url='crm-login')
+def add_excursion_slot(request):
+    if request.method == 'POST':
+        form = ExcursionSlotForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('crm-excursion-slot-list')
+    else:
+        form = ExcursionSlotForm()
+    return render(request, 'crm/excursion_slot_form.html', {'form': form})
+
+@user_passes_test(lambda u: u.is_authenticated and u.is_staff, login_url='crm-login')
+def excursion_slot_list(request):
+    slots = ExcursionSlot.objects.order_by('-date', '-time')
+    return render(request, 'crm/excursion_slot_list.html', {'slots': slots})

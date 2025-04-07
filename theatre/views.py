@@ -45,9 +45,6 @@ class ExcursionOrderAPIView(generics.CreateAPIView):
     serializer_class = ExcursionOrderSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
 class ReviewCreateAPIView(generics.CreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer

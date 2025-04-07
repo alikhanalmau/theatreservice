@@ -1,0 +1,28 @@
+{% extends 'crm/base.html' %}
+
+{% block content %}
+<h2>Слоты экскурсий</h2>
+<a href="{% url 'crm-add-slot' %}" class="btn btn-success mb-3">Добавить слот</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Дата</th>
+      <th>Время</th>
+      <th>Вместимость</th>
+      <th>Занято</th>
+      <th>Свободно</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for slot in slots %}
+    <tr>
+      <td>{{ slot.date }}</td>
+      <td>{{ slot.time }}</td>
+      <td>{{ slot.capacity }}</td>
+      <td>{{ slot.booked_count }}</td>
+      <td>{{ slot.available_slots }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

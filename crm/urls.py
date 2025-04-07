@@ -23,5 +23,7 @@ urlpatterns = [
     path('users/export/', views.export_users_csv, name='crm-user-export'),
     path('excursions/export/', views.export_excursions_csv, name='crm-excursion-export'),
     path('events/export/', views.export_events_csv, name='crm-event-export'),
+    path('excursions/slots/', views.excursion_slot_list, name='crm-excursion-slot-list'),
+    path('excursions/slots/add/', views.add_excursion_slot, name='crm-add-slot'),
 
 ]
