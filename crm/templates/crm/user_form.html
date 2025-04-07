@@ -1,0 +1,13 @@
+{% extends 'crm/base.html' %}
+{% block title %}Редактировать роль{% endblock %}
+{% block content %}
+  <h2>Редактировать роль пользователя: {{ user_obj.username }}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn">Сохранить</button>
+    <a href="{% url 'crm-user-list' %}" class="btn">Отмена</a>
+  </form>
+{% endblock %}

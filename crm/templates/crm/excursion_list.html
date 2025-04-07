@@ -1,0 +1,33 @@
+{% extends 'crm/base.html' %}
+{% block title %}Экскурсии{% endblock %}
+{% block content %}
+  <h1>Экскурсии</h1>
+  <a href="{% url 'crm-excursion-add' %}" class="btn">Добавить экскурсию</a>
+<a href="{% url 'crm-excursion-export' %}" class="btn" style="background: green;">Экспорт CSV</a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Дата</th>
+        <th>Время</th>
+        <th>Пользователь</th>
+        <th>Комментарий</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in excursions %}
+        <tr>
+          <td>{{ e.date }}</td>
+          <td>{{ e.time }}</td>
+          <td>{{ e.user.username }}</td>
+          <td>{{ e.comment }}</td>
+          <td>
+            <a href="{% url 'crm-excursion-edit' e.id %}" class="btn">Редактировать</a>
+            <a href="{% url 'crm-excursion-delete' e.id %}" class="btn" style="background:red;">Удалить</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

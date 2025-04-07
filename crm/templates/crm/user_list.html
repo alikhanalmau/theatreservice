@@ -1,0 +1,51 @@
+{% extends 'crm/base.html' %}
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+  <h1>Пользователи</h1>
+  <form method="get" style="margin-bottom: 1rem;">
+    <label>Фильтр по роли:
+      <select name="role">
+        <option value="">Все</option>
+        {% for role_option in roles %}
+          <option value="{{ role_option }}" {% if role_option == selected_role %}selected{% endif %}>
+            {{ role_option|title }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+    <button type="submit" class="btn">Применить</button>
+    <a href="{% url 'crm-user-list' %}" class="btn" style="background: #999;">Сброс</a>
+  </form>
+  <a href="{% url 'crm-user-export' %}" class="btn" style="background: green;">Экспорт CSV</a>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Логин</th>
+        <th>Email</th>
+        <th>Роль</th>
+        <th>Дата регистрации</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
+          <td>
+            <a href="{% url 'crm-user-edit' user.id %}" class="btn">Редактировать</a>
+            
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

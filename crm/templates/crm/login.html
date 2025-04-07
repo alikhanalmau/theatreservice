@@ -1,0 +1,12 @@
+{% extends 'crm/base.html' %}
+
+{% block title %}Вход в CRM{% endblock %}
+
+{% block content %}
+  <h2>Вход в CRM</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Войти</button>
+  </form>
+{% endblock %}

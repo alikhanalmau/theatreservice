@@ -1,0 +1,10 @@
+{% extends 'crm/base.html' %}
+{% block title %}Удалить заказ{% endblock %}
+{% block content %}
+  <h2>Удалить заказ от {{ ticket.user.username }} на "{{ ticket.event.title }}"?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn" style="background:red;">Удалить</button>
+    <a href="{% url 'crm-ticket-list' %}" class="btn">Отмена</a>
+  </form>
+{% endblock %}

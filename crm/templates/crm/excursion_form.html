@@ -1,0 +1,11 @@
+{% extends 'crm/base.html' %}
+{% block title %}Форма экскурсии{% endblock %}
+{% block content %}
+  <h2>{% if excursion %}Редактировать{% else %}Добавить{% endif %} экскурсию</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Сохранить</button>
+    <a href="{% url 'crm-excursion-list' %}" class="btn">Назад</a>
+  </form>
+{% endblock %}

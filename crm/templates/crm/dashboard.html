@@ -1,0 +1,23 @@
+{% extends 'crm/base.html' %}
+
+{% block title %}CRM | Главная{% endblock %}
+
+{% block content %}
+  <h1>Добро пожаловать в CRM театра</h1>
+
+  <h3 style="margin-top: 2rem;">📊 Статистика</h3>
+  <ul>
+    <li>🎭 Спектаклей: <strong>{{ stats.event_count }}</strong></li>
+    <li>🗺 Экскурсий: <strong>{{ stats.excursion_count }}</strong></li>
+    <li>📦 Заказов билетов: <strong>{{ stats.ticket_count }}</strong></li>
+    <li>👤 Пользователей: <strong>{{ stats.user_count }}</strong></li>
+  </ul>
+
+  <h3 style="margin-top: 2rem;">🔗 Разделы</h3>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <a href="{% url 'crm-event-list' %}" class="btn">🎭 Афиша (Спектакли)</a>
+    <a href="{% url 'crm-excursion-list' %}" class="btn">🗺 Экскурсии</a>
+    <a href="{% url 'crm-ticket-list' %}" class="btn">📦 Заказы билетов</a>
+    <a href="{% url 'crm-user-list' %}" class="btn">👤 Пользователи</a>
+  </div>
+{% endblock %}

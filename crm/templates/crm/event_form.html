@@ -1,0 +1,30 @@
+{% extends 'crm/base.html' %}
+
+{% block title %}
+  {% if event %}Редактировать спектакль{% else %}Добавить спектакль{% endif %}
+{% endblock %}
+
+{% block content %}
+  <h2 style="margin-bottom: 1rem;">
+    {% if event %}Редактирование спектакля: <em>{{ event.title }}</em>{% else %}Добавление нового спектакля{% endif %}
+  </h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      {{ form.as_p }}
+
+      {% if event and event.image %}
+        <div>
+          <p>Текущая афиша:</p>
+          <img src="{{ event.image.url }}" width="200" style="margin-top: 0.5rem; border-radius: 4px;" />
+        </div>
+      {% endif %}
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <button type="submit" class="btn">Сохранить</button>
+      <a href="{% url 'crm-event-list' %}" class="btn" style="background: #999;">Отмена</a>
+    </div>
+  </form>
+{% endblock %}

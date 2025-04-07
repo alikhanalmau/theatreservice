@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Удалить спектакль</title>
+</head>
+<body>
+  <h1>Удалить "{{ event.title }}"?</h1>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Да, удалить</button>
+    <a href="{% url 'crm-event-list' %}">Отмена</a>
+  </form>
+</body>
+</html>
