@@ -84,7 +84,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://theatredb_s5q5_user:Cf3UqF9XRfacnBhTKcufogMLZbVtuyao@dpg-cvkja9t6ubrc73fpmeng-a.oregon-postgres.render.com/theatredb_s5q5',
+        'postgresql://theatredb_4eh4_user:VrDQ6feuZVkOnpQKcZIHgyhgzBIYbHgf@dpg-cvq5evripnbc73ckbsng-a.oregon-postgres.render.com/theatredb_4eh4',
         conn_max_age=600,
         ssl_require=True
     )
