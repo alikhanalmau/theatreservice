@@ -65,6 +65,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class TicketOrderSerializer(serializers.ModelSerializer):
+    event = EventSerializer(read_only=True) 
+
     class Meta:
         model = TicketOrder
         fields = ['id', 'event', 'count', 'comment', 'status', 'created_at']
