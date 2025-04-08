@@ -34,6 +34,15 @@ class ExcursionOrderSerializer(serializers.ModelSerializer):
         model = ExcursionOrder
         fields = ['id', 'slot', 'comment', 'created_at']
 
+    def validate(self, data):
+        user = self.context['request'].user
+        slot = data.get('slot')
+
+        if ExcursionOrder.objects.filter(user=user, slot=slot).exists():
+            raise serializers.ValidationError("Вы уже записались на эту экскурсию.")
+
+        return data
+
     def create(self, validated_data):
         user = self.context['request'].user
         return ExcursionOrder.objects.create(user=user, **validated_data)

@@ -6,7 +6,8 @@ from .serializers import (
 )
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-
+from rest_framework.response import Response
+from rest_framework import status
 from theatre import serializers
 
 class EventListAPIView(generics.ListAPIView):
@@ -63,7 +64,13 @@ class TicketOrderListCreateAPIView(generics.ListCreateAPIView):
         return TicketOrder.objects.filter(user=self.request.user).select_related('event')
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(
+            user=self.request.user,
+            status='reserved',
+            comment='Заглушка бронирования через Ticketon'
+        )
+
+
 
 
 
@@ -74,6 +81,16 @@ class MyExcursionOrdersAPIView(generics.ListAPIView):
     def get_queryset(self):
         return ExcursionOrder.objects.select_related('slot').filter(user=self.request.user).order_by('-created_at')
 
+class MyExcursionCancelAPIView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, pk, *args, **kwargs):
+        try:
+            excursion = ExcursionOrder.objects.get(pk=pk, user=request.user)
+            excursion.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except ExcursionOrder.DoesNotExist:
+            return Response({'detail': 'Не найдено или нет доступа'}, status=status.HTTP_404_NOT_FOUND)
 
 class ReviewCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
@@ -87,3 +104,6 @@ class ReviewCreateAPIView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+

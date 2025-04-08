@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     EventListAPIView,
     ExcursionSlotListAPIView,
+    MyExcursionCancelAPIView,
     MyExcursionOrdersAPIView,
     ReviewCreateAPIView,
     ExcursionOrderAPIView,
@@ -18,6 +19,8 @@ urlpatterns = [
     path('excursions/', ExcursionOrderAPIView.as_view()),
     path('my-excursions/', MyExcursionOrdersAPIView.as_view()),
     path('reviews/', ReviewCreateAPIView.as_view(), name='review-list-create'),
+    path('my-excursions/<int:pk>/cancel/', MyExcursionCancelAPIView.as_view(), name='cancel_excursion'),
+
 ]
 
 
