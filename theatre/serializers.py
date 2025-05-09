@@ -30,6 +30,8 @@ class ExcursionSlotSerializer(serializers.ModelSerializer):
 
 
 class ExcursionOrderSerializer(serializers.ModelSerializer):
+    slot = ExcursionSlotSerializer(read_only=True)  # ← заменили на вложенный сериализатор
+
     class Meta:
         model = ExcursionOrder
         fields = ['id', 'slot', 'comment', 'created_at']

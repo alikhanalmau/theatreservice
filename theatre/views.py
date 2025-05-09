@@ -89,6 +89,7 @@ class MyExcursionOrdersAPIView(generics.ListAPIView):
     def get_queryset(self):
         return ExcursionOrder.objects.select_related('slot').filter(user=self.request.user).order_by('-created_at')
 
+
 class MyExcursionCancelAPIView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
