@@ -22,8 +22,6 @@
   <table>
     <thead>
       <tr>
-        <th>Имя</th>
-        <th>Фамилия</th>
         <th>Логин</th>
         <th>Email</th>
         <th>Роль</th>
@@ -34,8 +32,6 @@
     <tbody>
       {% for user in users %}
         <tr>
-          <td>{{ user.first_name }}</td>
-          <td>{{ user.last_name }}</td>
           <td>{{ user.username }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>

@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .forms import EventForm, ExcursionForm, ExcursionSlotForm, TicketOrderForm, UserRoleForm
 from django.contrib.auth.decorators import user_passes_test
 from theatre.models import Event, ExcursionOrder, ExcursionSlot, TicketOrder
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -155,7 +155,6 @@ def ticket_list(request):
     if event_id:
         tickets = tickets.filter(event_id=event_id)
 
-    # Данные для выпадающих списков
     users = User.objects.all()
     events = Event.objects.all()
 

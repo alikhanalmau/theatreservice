@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from abai_theatre import settings
 
 class User(AbstractUser):
-    role = models.CharField(max_length=50, default='user')  # или 'admin', 'manager'
+    role = models.CharField(max_length=50, default='user') 
 
 
 class Event(models.Model):
