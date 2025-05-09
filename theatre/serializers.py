@@ -64,8 +64,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+
 class TicketOrderSerializer(serializers.ModelSerializer):
-    event = EventSerializer(read_only=True) 
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
 
     class Meta:
         model = TicketOrder
@@ -74,4 +75,4 @@ class TicketOrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
-        return super().create(validated_data)
+        return TicketOrder.objects.create(**validated_data)

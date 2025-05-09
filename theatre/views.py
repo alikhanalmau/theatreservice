@@ -56,7 +56,6 @@ class ReviewCreateAPIView(generics.CreateAPIView):
 
 
 class TicketOrderListCreateAPIView(generics.ListCreateAPIView):
-    queryset = TicketOrder.objects.all()
     serializer_class = TicketOrderSerializer
     permission_classes = [IsAuthenticated]
 
@@ -64,13 +63,22 @@ class TicketOrderListCreateAPIView(generics.ListCreateAPIView):
         return TicketOrder.objects.filter(user=self.request.user).select_related('event')
 
     def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user,
-            status='reserved',
-            comment='Заглушка бронирования через Ticketon'
-        )
+        try:
+            event_id = self.request.data.get('event')
+            if not event_id:
+                raise serializers.ValidationError({"event": "Обязательное поле"})
 
+            event = Event.objects.filter(id=event_id).first()
+            if not event:
+                raise serializers.ValidationError({"event": "Событие не найдено"})
 
+            serializer.save(
+                user=self.request.user,
+                event=event,
+                status='reserved'
+            )
+        except Exception as e:
+            raise serializers.ValidationError({"detail": f"Ошибка бронирования: {str(e)}"})
 
 
 
