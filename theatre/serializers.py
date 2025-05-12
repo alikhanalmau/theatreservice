@@ -68,13 +68,22 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class TicketOrderSerializer(serializers.ModelSerializer):
-    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    event = EventSerializer(read_only=True)
 
     class Meta:
         model = TicketOrder
         fields = ['id', 'event', 'count', 'comment', 'status', 'created_at']
-        read_only_fields = ['status', 'created_at']
+
+
+class TicketOrderCreateSerializer(serializers.ModelSerializer):
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+
+    class Meta:
+        model = TicketOrder
+        fields = ['id', 'event', 'count', 'comment']
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
+        validated_data['status'] = 'reserved'
         return TicketOrder.objects.create(**validated_data)
+
