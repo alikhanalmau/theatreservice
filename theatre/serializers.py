@@ -28,26 +28,28 @@ class ExcursionSlotSerializer(serializers.ModelSerializer):
         model = ExcursionSlot
         fields = ['id', 'date', 'time', 'capacity', 'available_slots']
 
-
 class ExcursionOrderSerializer(serializers.ModelSerializer):
-    slot = ExcursionSlotSerializer(read_only=True)  # ← заменили на вложенный сериализатор
+    slot = ExcursionSlotSerializer(read_only=True)
 
     class Meta:
         model = ExcursionOrder
         fields = ['id', 'slot', 'comment', 'created_at']
 
+class ExcursionOrderCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExcursionOrder
+        fields = ['id', 'slot', 'comment']
+
     def validate(self, data):
         user = self.context['request'].user
         slot = data.get('slot')
-
         if ExcursionOrder.objects.filter(user=user, slot=slot).exists():
             raise serializers.ValidationError("Вы уже записались на эту экскурсию.")
-
         return data
 
     def create(self, validated_data):
-        user = self.context['request'].user
-        return ExcursionOrder.objects.create(user=user, **validated_data)
+        validated_data['user'] = self.context['request'].user
+        return ExcursionOrder.objects.create(**validated_data)
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):

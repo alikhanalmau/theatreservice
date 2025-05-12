@@ -1,7 +1,7 @@
 from rest_framework import generics
 from .models import Event, ExcursionSlot, Review, ExcursionOrder, TicketOrder
 from .serializers import (
-    EventSerializer, ExcursionSlotSerializer, ReviewSerializer,
+    EventSerializer, ExcursionOrderCreateSerializer, ExcursionSlotSerializer, ReviewSerializer,
     ExcursionOrderSerializer, TicketOrderSerializer, UserRegisterSerializer
 )
 from django.contrib.auth import get_user_model
@@ -43,8 +43,10 @@ class UserRegisterAPIView(generics.CreateAPIView):
 
 class ExcursionOrderAPIView(generics.CreateAPIView):
     queryset = ExcursionOrder.objects.all()
-    serializer_class = ExcursionOrderSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        return ExcursionOrderCreateSerializer
 
 class ReviewCreateAPIView(generics.CreateAPIView):
     queryset = Review.objects.all()
