@@ -11,7 +11,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateTimeField()
-    image = models.ImageField(upload_to='media/events/')
+    image = models.ImageField(upload_to='events/')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
